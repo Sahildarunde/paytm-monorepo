@@ -35,19 +35,19 @@ export async function p2pTransfer(to: string, amount: number) {
 
           await tx.balance.update({
             where: { userId: Number(from) },
-            data: { amount: { decrement: amount } },
+            data: { amount: { decrement: amount*100 } },
           });
 
           await tx.balance.update({
             where: { userId: toUser.id },
-            data: { amount: { increment: amount } },
+            data: { amount: { increment: amount*100 } },
           });
 
           await tx.p2pTransfer.create({
             data:{
-                fromUserId: from,
+                fromUserId: Number(from),
                 toUserId: toUser.id,
-                amount,
+                amount: amount * 100,
                 timestamp: new Date()
             }
           })

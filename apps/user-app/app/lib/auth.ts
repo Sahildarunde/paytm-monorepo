@@ -63,8 +63,8 @@ export const authOptions = {
           },
         }),
         GoogleProvider({
-            clientId,
-            clientSecret
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         })
     ],
     secret: process.env.JWT_SECRET || "secret",
@@ -74,7 +74,17 @@ export const authOptions = {
             session.user.id = token.sub
 
             return session
-        }
+        },
+        async signIn({ user, account, profile, email, credentials }:any) {
+            if (account?.provider === 'google') {
+              // Ensure email is a string before checking its value
+              if (typeof user.email === 'string') {
+                return user.email.endsWith('@gmail.com');
+              }
+              return false;
+            }
+            return true;
+        },
     }
-  }
+}
   

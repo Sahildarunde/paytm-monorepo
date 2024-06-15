@@ -61,6 +61,7 @@ const P2PTransfers = async ({ transfers}: any) => {
 
     const currentUserId = Number(session?.user?.id);
 
+
     const reversedTransfers = transfers.reverse();
 
     return (
@@ -69,9 +70,9 @@ const P2PTransfers = async ({ transfers}: any) => {
                 <div className="pt-2">
                     {reversedTransfers.length > 0 ? (
                         reversedTransfers.map((transfer: any) => (
-                            <div  className="flex justify-between border-b mb-2 border-slate-300">
+                            <div key={transfer.id} className="flex justify-between border-b mb-2 border-slate-300">
                                 <div className="transfer text-sm">
-                                    <p key={transfer.id}>
+                                    <p>
                                         {transfer.fromUserId === currentUserId
                                             ? `Sent to ${transfer.toUser.name}` 
                                             : `Received from ${transfer.fromUser.name}`
@@ -79,7 +80,7 @@ const P2PTransfers = async ({ transfers}: any) => {
                                     </p>
                                     <p className="text-slate-600 text-xs">{new Date(transfer.timestamp).toDateString()}</p>
                                 </div>
-                                <p className="flex flex-col justify-center">{transfer.fromUserId === currentUserId ? ` - ` : ` + `}  Rs {transfer.amount / 100}.00</p>
+                                <p className={`flex flex-col justify-center text-${transfer.fromUserId === currentUserId ? 'red' : 'green'}-700`}>{transfer.fromUserId === currentUserId ? '-' : '+'} Rs {transfer.amount / 100}.00</p>
                             </div>
                         ))
                     ) : (
@@ -111,3 +112,38 @@ export default async function() {
 
 
 
+
+// const P2PTransfers = async ({ transfers }: any) => {
+//     const session = await getServerSession(authOptions);
+//     const currentUserId = Number(session?.user?.id);
+
+//     // Reverse the transfers array to start from the last element
+//     const reversedTransfers = [...transfers].reverse();
+
+//     return (
+//         <div>
+//             <Card title="Peer to Peer Transactions">
+//                 <div className="pt-2">
+//                     {reversedTransfers.length > 0 ? (
+//                         reversedTransfers.map((transfer: any) => (
+//                             <div key={transfer.id} className="flex justify-between border-b mb-2 border-slate-300">
+//                                 <div className="transfer text-sm">
+//                                     <p>
+//                                         {transfer.fromUserId === currentUserId
+//                                             ? `Sent to ${transfer.toUser.name}` 
+//                                             : `Received from ${transfer.fromUser.name}`
+//                                         }
+//                                     </p>
+//                                     <p className="text-slate-600 text-xs">{new Date(transfer.timestamp).toDateString()}</p>
+//                                 </div>
+//                                 <p className="flex flex-col justify-center">Rs {transfer.amount / 100}.00</p>
+//                             </div>
+//                         ))
+//                     ) : (
+//                         <p>No transfers available</p>
+//                     )}
+//                 </div>
+//             </Card>
+//         </div>
+//     );
+// };

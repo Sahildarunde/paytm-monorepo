@@ -12,13 +12,13 @@ export const OnRampTransactions = ({
     }[]
 }) => {
     if (!transactions.length) {
-        return <Card title="Recent Transactions">
+        return <Card title="On Ramp Recent Transactions">
             <div className="text-center pb-8 pt-8 border border-blur-600">
                 No Recent transactions
             </div>
         </Card>
     }
-    return <Card title="Recent Transactions">
+    return <Card title="On Ramp Recent Transactions">
         <div className="pt-2">
             {transactions.map(t => <div className="flex justify-between border-b mb-2 border-slate-300">
                 <div>

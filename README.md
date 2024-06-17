@@ -1,4 +1,4 @@
-- Clone the repo
+- Clone the repo 
 
 ```jsx
 git clone
